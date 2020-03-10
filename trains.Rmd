@@ -1,0 +1,27 @@
+---
+title: "trains"
+author: "Matej Cerman"
+date: "10 3 2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F)
+library(gov.1005.data)
+library(tidyverse)
+library(infer)
+```
+
+```{r trains}
+train <- train
+
+train %>%
+  filter(treatment == "Treated") %>%
+  rep_sample_n(size = 51, replace = TRUE, reps = 1000) %>%
+  group_by(replicate) %>%
+  summarise(avg_inc = mean(income)) %>%
+  pull(avg_inc) %>%
+  quantile(c(0.025, 0.975))
+
+```
+
